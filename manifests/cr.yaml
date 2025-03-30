@@ -1,0 +1,6 @@
+apiVersion: example.com/v1alpha1
+kind: Apple
+metadata:
+  name: fuji-apple
+spec:
+  type: fuji
