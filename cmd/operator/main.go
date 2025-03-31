@@ -25,6 +25,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/klog/v2"
 
+	controller "github.com/example/custom-operator/pkg/controller"
 	clientset "github.com/example/custom-operator/pkg/generated/clientset/versioned"
 	informers "github.com/example/custom-operator/pkg/generated/informers/externalversions"
 	kubeinformers "k8s.io/client-go/informers"
@@ -64,10 +65,10 @@ func main() {
 		klog.FlushAndExit(klog.ExitFlushTimeout, 1)
 	}
 
-	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*30)
-	exampleInformerFactory := informers.NewSharedInformerFactory(exampleClient, time.Second*30)
+	kubeInformerFactory := kubeinformers.NewSharedInformerFactory(kubeClient, time.Second*60)
+	exampleInformerFactory := informers.NewSharedInformerFactory(exampleClient, time.Second*60)
 
-	controller := NewController(ctx, kubeClient, exampleClient,
+	controller := controller.NewController(ctx, kubeClient, exampleClient,
 		kubeInformerFactory.Apps().V1().Deployments(),
 		exampleInformerFactory.Example().V1alpha1().Apples())
 
